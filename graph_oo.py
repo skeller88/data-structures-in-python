@@ -7,8 +7,8 @@ class Graph:
         self._vertices = {}
         self._size = 0
 
-    def contains(self, val):
-        if self._vertices[val]:
+    def __contains__(self, item):
+        if self._vertices[item]:
             return True
         return False
 
@@ -37,12 +37,12 @@ class Graph:
         if target_edge:
             self.add_edge(val, target_edge)
 
-    def remove_node(self, val):
-        if not self._vertices.get(val):
+    def __delitem__(self, key):
+        if not self._vertices.get(key):
             raise Exception('Node does not exist in the graph.')
 
         self._size -= 1
-        del self._vertices[val]
+        del self._vertices[key]
 
     def add_edge(self, node_1, node_2):
         if not (self._vertices.get(node_1) and self._vertices.get(node_2)):
