@@ -7,8 +7,8 @@ class Graph:
         self._vertices = {}
         self._size = 0
 
-    def __contains__(self, item):
-        if self._vertices[item]:
+    def __contains__(self, vertex):
+        if self._vertices[vertex]:
             return True
         return False
 
@@ -29,7 +29,7 @@ class Graph:
         self._vertices = new_vertices
         self._edges = new_edges
 
-    def add_node(self, val, target_edge=None):
+    def add_vertex(self, val, target_edge=None):
         self._vertices[val] = True
         self._edges[val] = {}
         self._size += 1
@@ -37,23 +37,23 @@ class Graph:
         if target_edge:
             self.add_edge(val, target_edge)
 
-    def __delitem__(self, key):
-        if not self._vertices.get(key):
+    def __delitem__(self, vertext):
+        if not self._vertices.get(vertext):
             raise Exception('Node does not exist in the graph.')
 
         self._size -= 1
-        del self._vertices[key]
+        del self._vertices[vertext]
 
-    def add_edge(self, node_1, node_2):
-        if not (self._vertices.get(node_1) and self._vertices.get(node_2)):
+    def add_edge(self, v1, v2):
+        if not (self._vertices.get(v1) and self._vertices.get(v2)):
             raise Exception('One of the nodes does not exist in the graph.')
 
-        self._edges[node_1][node_2] = True
-        self._edges[node_2][node_1] = True
+        self._edges[v1][v2] = True
+        self._edges[v2][v1] = True
 
-    def remove_edge(self, node_1, node_2):
-        if not (self._vertices.get(node_1) and self._vertices.get(node_2)):
+    def remove_edge(self, v1, v2):
+        if not (self._vertices.get(v1) and self._vertices.get(v2)):
             raise Exception('One of the nodes does not exist in the graph.')
 
-        del self._edges[node_1][node_2]
-        del self._edges[node_2][node_1]
+        del self._edges[v1][v2]
+        del self._edges[v2][v1]
