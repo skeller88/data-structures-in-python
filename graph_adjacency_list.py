@@ -6,7 +6,7 @@ from collections import defaultdict
 
 class AdjacencyList:
     def __init__(self):
-        self._vertices = defaultdict(lambda: defaultdict(dict))
+        self._vertices = defaultdict(lambda: defaultdict(int))
 
     def add_vertex(self, val, neighbors=[]):
         for n in neighbors:
@@ -30,3 +30,49 @@ class AdjacencyList:
     def remove_edge(self, v1, v2):
         del self._vertices[v1][v2]
         del self._vertices[v2][v1]
+
+    def bread_first_search(self, val):
+        results = []
+        visited = {}
+        distance = 0
+        vertices_to_traverse = [{'distance': distance, 'value': val}]
+
+        while vertices_to_traverse:
+            vertex = vertices_to_traverse.pop(0)
+            value = vertex['value']
+
+            results.append(vertex)
+
+            neighbors = self._vertices[value]
+            distance += 1
+
+            for k, v in neighbors.iteritems():
+                if k not in visited:
+                    vertices_to_traverse.append({
+                        'distance': distance,
+                        'value': k,
+                        })
+
+            visited[value] = True
+
+        return results
+
+    def depth_first_search(self, val):
+        results = []
+        visited = {}
+
+        def traverse(vertex, distance=0):
+            visited[vertex] = True
+
+            results.append({
+                'distance': distance,
+                'value': vertex
+            })
+
+            for k in self._vertices[vertex]:
+                if k not in visited:
+                    traverse(k, distance + 1)
+
+        traverse(val)
+
+        return results
