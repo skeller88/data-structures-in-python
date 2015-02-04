@@ -71,7 +71,7 @@ class LinkedList:
             prev['next'] = None
             self.tail = prev
 
-        return old_tail
+        return (old_tail['key'], old_tail['value'])
 
     def remove_from_head(self):
         old_head = self.head
@@ -85,7 +85,7 @@ class LinkedList:
             next['prev'] = None
             self.head = next
 
-        return old_head
+        return (old_head['key'], old_head['value'])
 
     def __make_node(self, options):
         return {
@@ -96,7 +96,7 @@ class LinkedList:
         }
 
     def update_node(self, key, value):
-        """Mainly used by hash table."""
+        """Used by hash table."""
         node = self.head
 
         while node:
@@ -108,6 +108,7 @@ class LinkedList:
         raise Exception('No node with key ' + key + ' exists.')
 
     def remove_node(self, key):
+        """Used by hash table."""
         node = self.head
 
         while node:
@@ -120,13 +121,14 @@ class LinkedList:
                     node['prev']['next'] = node['next']
                     node['next']['prev'] = node['prev']
 
-                return node
+                return node['value']
 
             node = node['next']
 
         return None
 
     def get_node_value(self, key):
+        """Used by hash table."""
         node = self.head
 
         while node:
