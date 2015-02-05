@@ -6,30 +6,30 @@ from collections import defaultdict
 
 class AdjacencyList:
     def __init__(self):
-        self._vertices = defaultdict(lambda: defaultdict(int))
+        self.__vertices = defaultdict(lambda: defaultdict(int))
 
     def add_vertex(self, val, neighbors=[]):
         for n in neighbors:
             n_val = n['value']
-            self._vertices[val][n_val] = n['weight']
-            self._vertices[n_val][val] = n['weight']
+            self.__vertices[val][n_val] = n['weight']
+            self.__vertices[n_val][val] = n['weight']
 
     def remove_vertex(self, val):
-        del self._vertices[val]
+        del self.__vertices[val]
 
-        for v in self._vertices:
-            del self._vertices[v][val]
+        for v in self.__vertices:
+            del self.__vertices[v][val]
 
     def add_edge(self, v1, v2, w=1):
-        self._vertices[v1][v2] = w
-        self._vertices[v2][v1] = w
+        self.__vertices[v1][v2] = w
+        self.__vertices[v2][v1] = w
 
     def get_edge(self, v1, v2):
-        return self._vertices[v1][v2]
+        return self.__vertices[v1][v2]
 
     def remove_edge(self, v1, v2):
-        del self._vertices[v1][v2]
-        del self._vertices[v2][v1]
+        del self.__vertices[v1][v2]
+        del self.__vertices[v2][v1]
 
     def bread_first_search(self, val):
         results = []
@@ -43,7 +43,7 @@ class AdjacencyList:
 
             results.append(vertex)
 
-            neighbors = self._vertices[value]
+            neighbors = self.__vertices[value]
             distance += 1
 
             for k, v in neighbors.iteritems():
@@ -69,7 +69,7 @@ class AdjacencyList:
                 'value': vertex
             })
 
-            for k in self._vertices[vertex]:
+            for k in self.__vertices[vertex]:
                 if k not in visited:
                     traverse(k, distance + 1)
 
